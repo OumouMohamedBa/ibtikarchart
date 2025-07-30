@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rocketchat-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    cert-manager.io/cluster-issuer: "production-cert-issuer"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - rocketchat.129.212.169.222.sslip.io
+    secretName: rocketchat-tls
+  rules:
+  - host: rocketchat.129.212.169.222.sslip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rocketchat-rocketchat
+            port:
+              number: 3000
