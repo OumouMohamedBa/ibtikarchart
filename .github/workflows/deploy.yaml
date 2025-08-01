@@ -22,7 +22,7 @@ jobs:
       uses: azure/setup-helm@v3
 
     - name: Helm dependency update
-      run: helm dependency update ./ibtikarchart
+      run: helm dependency update .
 
     - name: Deploy with Helm
-      run: helm upgrade --install ibtikarchart ./ibtikarchart -n ibtikarchart --create-namespace
+      run: helm upgrade --install ibtikarchart . -n ibtikarchart --create-namespace
