@@ -1,4 +1,4 @@
-name: Deploy Frontend App
+name: Auto Deploy to Kubernetes
 
 on:
   push:
@@ -10,13 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Kubeconfig
-        run: |
-          echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > ~/.kube/config
+    - name: Setup Kubeconfig
+      run: |
+        echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > ~/.kube/config
 
-      - name: Deploy with Helm
-        run: |
-          helm upgrade --install frontend-app ./chart -n ibtikarchart
+    - name: Helm dependency update
+      run: helm dependency update ./chart # ← adapter selon le chemin réel
+
+    - name: Deploy with Helm
+      run: helm upgrade --install my-app ./chart -n my-namespace --create-namespace
