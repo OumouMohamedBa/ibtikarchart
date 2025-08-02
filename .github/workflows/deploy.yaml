@@ -18,9 +18,8 @@ jobs:
         mkdir -p ~/.kube
         echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 -d > ~/.kube/config
 
-    - name: Deploy with Helm
+    - name: Helm Install
       run: |
-        helm dependency update ibtikarchart .
-        helm upgrade --install ibtikarchart ibtikarchart . -n ibtikarchart --create-namespace
-
+        helm dependency update .
+        helm upgrade --install ibtikarchart . -n ibtikarchart --create-namespace
 
