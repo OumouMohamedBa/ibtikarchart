@@ -22,4 +22,4 @@ jobs:
 
     - name: Helm upgrade
       run: |
-        helm upgrade --install ibtikarchart ./ibtikarchart -n ibtikarchart --create-namespace
+        helm upgrade --install ibtikarchart ibtikarchart . -n ibtikarchart --create-namespace
