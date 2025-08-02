@@ -2,25 +2,30 @@ name: Deploy ibtikarchart to Kubernetes
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  deploy:
+  helm-deploy:
+    name: Helm Deploy
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up kubeconfig
+    - name: Set up Kubeconfig
       run: |
         mkdir -p ~/.kube
-        echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > ~/.kube/config
+        echo "${{ secrets.KUBECONFIG_FILE }}" | base64 -d > ~/.kube/config
 
-    - name: Helm dependencies
-      run: helm dependency update ibtikarchart .
+    - name: Install Helm
+      uses: azure/setup-helm@v3
+      with:
+        version: v3.14.0
+
+    - name: Helm dependency update
+      run: helm dependency update .
 
     - name: Helm upgrade
-      run: |
-        helm upgrade --install ibtikarchart ibtikarchart . -n ibtikarchart --create-namespace
-
+      run: helm upgrade --install ibtikarchart . -n ibtikarchart --create-namespace
