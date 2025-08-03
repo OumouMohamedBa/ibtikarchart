@@ -20,7 +20,7 @@ imagePullSecrets: []
 ## set it to a domain pointing to your loadbalancer
 # host:
 
-replicaCount: 1
+replicaCount: 2
 minAvailable: 1
 
 smtp:
