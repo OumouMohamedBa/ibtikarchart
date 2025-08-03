@@ -11,7 +11,7 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - rocketchat.129.212.169.222.sslip.io
+    - rocketchatgovcom.129.212.169.222.sslip.io
     secretName: rocketchat-tls
   rules:
   - host: rocketchat.129.212.169.222.sslip.io
@@ -24,3 +24,4 @@ spec:
             name: rocketchat-rocketchat
             port:
               number: 3000
+
