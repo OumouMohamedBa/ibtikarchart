@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: rocketchat-ingress
-  namespace: default
+  name: ingress-ibtikarchart
+  namespace: ibtikarchart        # <-- THIS MUST BE PRESENT
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
@@ -10,17 +10,17 @@ metadata:
 spec:
   ingressClassName: nginx
   tls:
-  - hosts:
-    - rocketchat.129.212.169.222.sslip.io
-    secretName: rocketchat-tls
+    - hosts:
+        - rocketchatgovcom.129.212.169.222.sslip.io
+      secretName: rocketchat-tls
   rules:
-  - host: rocketchat.129.212.169.222.sslip.io
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: rocketchat-rocketchat
-            port:
-              number: 3000
+    - host: rocketchatgovcom.129.212.169.222.sslip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ibtikarchart-rocketchat
+                port:
+                  number: 3001

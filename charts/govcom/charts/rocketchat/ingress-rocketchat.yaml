@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: rocketchat-ingress
-  namespace: default
+  name: ingress-ibtikarchart
+  namespace: ibtikarchart
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
@@ -16,6 +16,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: rocketchat-rocketchat
+            name: ibtikarchart-rocketchat
             port:
-              number: 3000
+              number: 3001
