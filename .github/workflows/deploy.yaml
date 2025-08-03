@@ -22,17 +22,6 @@ jobs:
     - name: Set up Helm
       uses: azure/setup-helm@v3
 
-    - name: Remove duplicate "http" port from Service if exists
-      run: |
-        set -e
-        INDEXES=$(kubectl get svc ibtikarchart-rocketchat -n ibtikarchart -o json | jq '.spec.ports | to_entries | map(select(.value.name == "http")) | .[].key' | sort -r)
-        for i in $INDEXES; do
-          echo "Removing duplicate port index: $i"
-          kubectl patch svc ibtikarchart-rocketchat -n ibtikarchart --type='json' -p="[{'op': 'remove', 'path': '/spec/ports/$i'}]"
-        done
-      shell: bash
-      continue-on-error: true
-
     - name: Deploy with Helm
       run: |
         helm dependency update .
