@@ -123,10 +123,14 @@ tolerations: []
 affinity: {}
 govcom:
   rocketchat:
+    replicaCount: 2
     nodeSelector: {}
     ingress:
       federation:
         serveWellKnown: false
+
+ 
+
 
     
 
