@@ -19,15 +19,6 @@ jobs:
           echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > ~/.kube/config
           chmod 600 ~/.kube/config
 
-      - name: Installer yq
-        run: |
-          sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq
-          sudo chmod +x /usr/bin/yq
-
-      - name: Modifier le service YAML pour enlever le port http en doublon
-        run: |
-          yq eval 'del(.spec.ports[] | select(.name == "http") | select(.port == 443))' -i ./templates/service.yaml
-
       - name: Set up Helm
         uses: azure/setup-helm@v3
 
@@ -35,4 +26,5 @@ jobs:
         run: |
           helm dependency update .
           helm upgrade --install ibtikarchart . -n ibtikarchart --create-namespace
+
 
