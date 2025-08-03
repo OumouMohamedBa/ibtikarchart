@@ -124,3 +124,4 @@ affinity: {}
 ingress:
   federation:
     serveWellKnown: false
+
