@@ -1,4 +1,4 @@
-{{- $service := .Values.service -}}
+{{- $service := .Values.service -}} 
 apiVersion: v1
 kind: Service
 metadata:
@@ -87,7 +87,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - name: http
+  - name: bridge-http     # 🔁 NOM MODIFIÉ ICI pour éviter les doublons
     port: 3300
     targetPort: 3300
     protocol: TCP
