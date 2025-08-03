@@ -14,7 +14,7 @@ spec:
     - rocketchatgovcom.129.212.169.222.sslip.io
     secretName: rocketchat-tls
   rules:
-  - host: rocketchat.129.212.169.222.sslip.io
+  - host: rocketchatgovcom.129.212.169.222.sslip.io
     http:
       paths:
       - path: /
@@ -24,4 +24,5 @@ spec:
             name: rocketchat-rocketchat
             port:
               number: 3000
+
 
