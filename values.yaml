@@ -121,7 +121,10 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-ingress:
-  federation:
-    serveWellKnown: false
+govcom:
+  rocketchat:
+    ingress:
+      federation:
+        serveWellKnown: false
+
 
