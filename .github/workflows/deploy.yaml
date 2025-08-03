@@ -26,7 +26,7 @@ jobs:
 
       - name: Modifier le service YAML pour enlever le port http en doublon
         run: |
-          yq eval 'del(.spec.ports[] | select(.name == "http") | select(.port == 443))' -i ./charts/ibtikarchart/templates/service.yaml
+          yq eval 'del(.spec.ports[] | select(.name == "http") | select(.port == 443))' -i ./templates/service.yaml
 
       - name: Set up Helm
         uses: azure/setup-helm@v3
@@ -35,3 +35,4 @@ jobs:
         run: |
           helm dependency update .
           helm upgrade --install ibtikarchart . -n ibtikarchart --create-namespace
+
