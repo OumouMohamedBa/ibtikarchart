@@ -22,6 +22,11 @@ jobs:
     - name: Set up Helm
       uses: azure/setup-helm@v3
 
+    - name: Remove conflicting port from Service
+      run: |
+        kubectl patch svc ibtikarchart-rocketchat -n ibtikarchart --type='json' -p='[{"op": "remove", "path": "/spec/ports/1"}]'
+      continue-on-error: true
+
     - name: Deploy with Helm
       run: |
         helm dependency update .
