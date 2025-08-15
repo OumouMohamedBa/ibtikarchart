@@ -29,8 +29,7 @@ jobs:
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > $HOME/.kube/config
 
-      - name: Deploy Helm Chart
-        run: |
-          helm dependency update ibtikarchart
+     
           
+
 
