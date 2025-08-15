@@ -1,0 +1,230 @@
+# Default values for gendarmerie.
+# This is a YAML-formatted file.
+# Declare variables to be substituted into your templates.
+
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: gendarmerie.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# GendaRocketChat configuration
+gendarocketchat:
+  enabled: true
+  
+  # Image configuration
+  image:
+    repository: registry.rocket.chat/rocketchat/rocket.chat
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  
+  # Replica configuration
+  replicaCount: 1
+  minAvailable: 1
+  
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 80
+  
+  # Ingress configuration
+  ingress:
+    enabled: false
+    pathType: Prefix
+    annotations: {}
+    path: /
+    tls: []
+    hosts:
+      - host: gendarmerie-chat.local
+        paths:
+          - path: /
+            pathType: Prefix
+  
+  # MongoDB configuration (disabled by default, using external)
+  mongodb:
+    enabled: false
+  
+  # External MongoDB URL (modify these for your environment)
+  externalMongodbUrl: "mongodb+srv://deidine:rZhC62DGziFtMnim@cluster0.3j9ll.mongodb.net/rocketchat?retryWrites=true&w=majority"
+  externalMongodbOplogUrl: "mongodb+srv://deidine:rZhC62DGziFtMnim@cluster0.3j9ll.mongodb.net/local?retryWrites=true&w=majority"
+  
+  # Environment variables
+  env:
+    MONGO_URL: "mongodb+srv://deidine:rZhC62DGziFtMnim@cluster0.3j9ll.mongodb.net/rocketchat?retryWrites=true&w=majority"
+    MONGO_OPLOG_URL: "mongodb+srv://deidine:rZhC62DGziFtMnim@cluster0.3j9ll.mongodb.net/local?retryWrites=true&w=majority"
+  
+  # Security context
+  securityContext:
+    enabled: true
+    runAsUser: 999
+    fsGroup: 999
+  
+  # Service Account
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: ""
+  
+  # Persistence (disabled by default)
+  persistence:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 8Gi
+  
+  # Probes
+  livenessProbe:
+    enabled: true
+    path: /health
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  
+  readinessProbe:
+    enabled: true
+    path: /health
+    initialDelaySeconds: 10
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  
+  # Prometheus monitoring
+  prometheusScraping:
+    enabled: true
+    port: 9100
+  
+  # Pod and service labels/annotations
+  podLabels: {}
+  podAnnotations: {}
+  
+  # Extra environment variables
+  extraEnv: []
+  
+  # SMTP configuration (optional)
+  smtp:
+    enabled: false
+    username: ""
+    password: ""
+    host: ""
+    port: 587
+
+# Dashboard Gendarmerie configuration
+dashgendarmerie:
+  enabled: true
+  
+  # Configuration Grafana pour le dashboard
+  grafana:
+    adminUser: admin
+    adminPassword: gendarmerie2025
+    
+    service:
+      type: ClusterIP
+      port: 3000
+      targetPort: 3000
+    
+    env:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: gendarmerie2025
+      GF_SERVER_ROOT_URL: "https://dashgendarmerie.129.212.169.222.sslip.io"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"

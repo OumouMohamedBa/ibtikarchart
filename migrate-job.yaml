@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migrate-data-job
+  namespace: ibtikarchart
+spec:
+  template:
+    spec:
+      containers:
+      - name: mongo-migrate
+        image: mongo:5.0
+        command: ["mongosh"]
+        args: ["mongodb://mongodb-standalone:27017", "/scripts/migrate-data.js"]
+        volumeMounts:
+        - name: migrate-volume
+          mountPath: /scripts
+        env:
+        - name: MONGODB_EXTERNAL_URI
+          value: "mongodb://sabbar:6J457yC9VZ91N9W83YWt@167.172.96.88:27017/rocketchat?authSource=admin"
+      volumes:
+      - name: migrate-volume
+        configMap:
+          name: migrate-script
+      restartPolicy: Never
+  backoffLimit: 2
+  activeDeadlineSeconds: 1800

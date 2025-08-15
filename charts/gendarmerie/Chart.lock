@@ -1,0 +1,6 @@
+dependencies:
+- name: gendarocketchat
+  repository: file://charts/gendarocketchat
+  version: 6.25.2
+digest: sha256:950193e6fbbc95487e0709f4a838a74522eebbd0b754cc7d3dee785d6d97af22
+generated: "2025-08-13T11:41:11.5647192+02:00"

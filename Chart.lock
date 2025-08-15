@@ -1,0 +1,9 @@
+dependencies:
+- name: govcom
+  repository: file://charts/govcom
+  version: 0.1.0
+- name: gendarmerie
+  repository: file://charts/gendarmerie
+  version: 0.1.0
+digest: sha256:789a859fe087c8838ed41c51e4b96e14923201d2d07a5e81ca825f3583cd7f18
+generated: "2025-08-13T11:32:40.6328836+02:00"

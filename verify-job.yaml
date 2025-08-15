@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: verify-external-db
+  namespace: ibtikarchart
+spec:
+  template:
+    spec:
+      containers:
+      - name: mongo-verify
+        image: mongo:5.0
+        command: ["mongosh"]
+        args: ["mongodb://sabbar:6J457yC9VZ91N9W83YWt@167.172.96.88:27017/?authSource=admin", "/scripts/verify-external.js"]
+        volumeMounts:
+        - name: verify-volume
+          mountPath: /scripts
+      volumes:
+      - name: verify-volume
+        configMap:
+          name: verify-script
+      restartPolicy: Never
+  backoffLimit: 2

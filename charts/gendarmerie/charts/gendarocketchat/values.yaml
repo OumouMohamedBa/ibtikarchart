@@ -1,0 +1,345 @@
+global:
+  tolerations: []
+  annotations: {}
+  nodeSelector: {}
+  affinity: {}
+
+image:
+  repository: registry.rocket.chat/rocketchat/rocket.chat
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+
+
+replicaCount: 1
+minAvailable: 1
+
+smtp:
+  enabled: false
+  username:
+  password:
+  host:
+  port: 587
+
+extraEnv:
+  
+
+extraVolumes:
+  
+
+
+extraVolumeMounts:
+  
+
+extraInitContainers: []
+  
+podAntiAffinity: ""
+
+
+podAntiAffinityTopologyKey: kubernetes.io/hostname
+
+affinity: {}
+
+existingMongodbSecret: ""
+
+
+externalMongodbUrl: "mongodb+srv://deidine:rZhC62DGziFtMnim@cluster0.3j9ll.mongodb.net/local?retryWrites=true&w=majority"
+externalMongodbOplogUrl: "mongodb+srv://deidine:rZhC62DGziFtMnim@cluster0.3j9ll.mongodb.net/local?retryWrites=true&w=majority"
+env:
+  MONGO_URL: "mongodb+srv://deidine:rZhC62DGziFtMnim@cluster0.3j9ll.mongodb.net/local?retryWrites=true&w=majority"
+  MONGO_OPLOG_URL: "mongodb+srv://deidine:rZhC62DGziFtMnim@cluster0.3j9ll.mongodb.net/local?retryWrites=true&w=majority"
+
+
+
+mongodb:
+
+  enabled: false
+
+  initdbScriptsConfigMap: rocketchat-mongodb-fix-clustermonitor-role-configmap
+
+  auth:
+    rootPassword: root123
+    usernames:
+      - rocketchat
+    passwords:
+      - rocketchat123
+    databases:
+      - rocketchat
+
+  architecture: replicaset
+  replicaCount: 1
+  arbiter:
+    enabled: false
+    pdb:
+      minAvailable: 0
+  pdb:
+    minAvailable: 0
+
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: false 
+
+  persistence:
+    enabled: true
+    
+    accessMode: ReadWriteOnce
+    size: 8Gi
+
+  volumePermissions: { enabled: true }
+
+
+persistence:
+  enabled: false
+
+  accessMode: ReadWriteOnce
+  size: 8Gi
+
+
+
+securityContext:
+  enabled: true
+  runAsUser: 999
+  fsGroup: 999
+
+serviceAccount:
+  
+  create: true
+
+  
+  annotations: {}
+  
+  name:
+
+
+ingress:
+  enabled: false
+  pathType: Prefix
+
+  annotations:
+    {}
+    
+  path: /
+  tls: []
+  
+  federation:
+    serveWellKnown: false
+
+service:
+  annotations: {}
+
+  labels: {}
+  
+  type: ClusterIP
+
+  
+
+  port: 80
+
+
+  loadBalancerIP: ""
+
+
+deploymentLabels: {}
+
+
+podLabels: {}
+
+
+
+podAnnotations:
+  {}
+
+
+prometheusScraping:
+  enabled: true
+  port: 9100 
+  msPort: 9458
+
+
+serviceMonitor:
+  
+  
+  enabled: false
+
+
+  ports:
+    - metrics
+
+
+  intervals:
+    - 30s
+
+podMonitor:
+  
+  
+  enabled: true
+
+
+  interval: 30s
+
+
+
+
+livenessProbe:
+  enabled: true
+  path: /health
+  initialDelaySeconds: 60
+  periodSeconds: 15
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  path: /health
+  initialDelaySeconds: 10
+  periodSeconds: 15
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+
+podDisruptionBudget:
+  enabled: true
+
+
+
+microservices:
+  enabled: false
+
+  logLevel: warn
+
+  heartbeatInterval: 10
+  heartbeatTimeout: 30
+
+
+
+  presence:
+    replicas: 1
+    image:
+      repository: rocketchat/presence-service
+      pullPolicy: IfNotPresent
+    securityContext: {}
+    resources: {}
+
+
+    tolerations: []
+
+  ddpStreamer:
+    replicas: 1
+    image:
+      repository: rocketchat/ddp-streamer-service
+      pullPolicy: IfNotPresent
+    securityContext: {}
+    resources: {}
+    
+    
+    tolerations: []
+
+  account:
+    replicas: 1
+    image:
+      repository: rocketchat/account-service
+      pullPolicy: IfNotPresent
+    securityContext: {}
+    resources: {}
+  
+  
+    tolerations: []
+
+  authorization:
+    replicas: 1
+    image:
+      repository: rocketchat/authorization-service
+      pullPolicy: IfNotPresent
+    securityContext: {}
+    resources: {}
+  
+  
+    tolerations: []
+
+  streamHub:
+    image:
+      repository: rocketchat/stream-hub-service
+      pullPolicy: IfNotPresent
+    securityContext: {}
+    resources: {}
+    
+  
+    tolerations: []
+
+  
+  presenceService:
+  ddpStreamerService:
+  natsService:
+  streamHubService:
+  accountService:
+  authorizationService:
+
+nats:
+  nats:
+    image: nats:2.4-alpine
+  cluster:
+    enabled: true
+    replicas: 2
+  exporter:
+    enabled: true
+    serviceMonitor:
+      enabled: false
+federation:
+
+  image:
+    repository: matrixdotorg/synapse
+    registry: docker.io
+    tag: v1.84.1
+  enabled: false
+  persistence:
+    enabled: false
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+
+postgresql:
+  enabled: false
+  auth:
+    username: rocketchat
+    password: rocketchat
+    database: rocketchat
+  primary:
+    extraEnvVars:
+      - name: POSTGRES_INITDB_ARGS
+        value: "--lc-collate=C --lc-ctype=C"
+
+
+tolerations: []
+
+hooks:
+  preUpgrade:
+    podAnnotations: {}
+    podLabels: {}
+
+ingress:
+  annotations:
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    cert-manager.io/cluster-issuer: production-cert-issuer
+service:
+  port: 443
+extraVolumes:
+  - name: tls-cert
+    secret:
+      secretName: rocketchat-server-side-cert
+extraVolumeMounts:
+  - name: tls-cert
+    mountPath: /certs
+    readOnly: true
+extraEnv: |
+  - name: OVERWRITE_SETTING__Site_Url
+    value: "https://chat.mondomaine.com"
+  - name: TLS_CERT_PATH
+    value: "/certs/tls.crt"
+  - name: TLS_KEY_PATH
+    value: "/certs/tls.key"
+ingress:
+  enabled: false

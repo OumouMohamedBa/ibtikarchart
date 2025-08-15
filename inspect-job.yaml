@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: inspect-external-db
+  namespace: ibtikarchart
+spec:
+  template:
+    spec:
+      containers:
+      - name: mongo-inspect
+        image: mongo:5.0
+        command: ["mongosh"]
+        args: ["mongodb://sabbar:6J457yC9VZ91N9W83YWt@167.172.96.88:27017/?authSource=admin", "/scripts/inspect-personnel.js"]
+        volumeMounts:
+        - name: script-volume
+          mountPath: /scripts
+      volumes:
+      - name: script-volume
+        configMap:
+          name: inspect-script
+      restartPolicy: Never
+  backoffLimit: 4

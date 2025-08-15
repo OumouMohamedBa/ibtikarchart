@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: govcom-quick-test
+  namespace: ibtikarchart
+spec:
+  # Test avec timeout de 5 minutes seulement
+  activeDeadlineSeconds: 300
+  backoffLimit: 1
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: govcom-cron
+        image: oumouba/govcom-cronjob:latest
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef:
+            name: govcom-env-secret
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+        env:
+        - name: JOB_TIMEOUT
+          value: "240"  # 4 minutes en secondes
+      terminationGracePeriodSeconds: 30

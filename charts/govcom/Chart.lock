@@ -2,5 +2,8 @@ dependencies:
 - name: rocketchat
   repository: file://charts/rocketchat
   version: 6.25.2
-digest: sha256:dd4d3290723c2775e429397d0ec83fd549e33697ad2091e9badc0523c491012a
-generated: "2025-07-29T13:21:30.8034457+02:00"
+- name: dashboard
+  repository: file://charts/dashboard
+  version: 0.1.0
+digest: sha256:09200be8b6fe09deada64133f7f10725e9be167dd2291418e03d83c26726343f
+generated: "2025-08-05T17:59:53.2310978+02:00"

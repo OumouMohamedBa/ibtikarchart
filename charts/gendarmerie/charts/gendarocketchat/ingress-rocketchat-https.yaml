@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-gendarocketchat
+  namespace: ibtikarchart        
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    cert-manager.io/cluster-issuer: "production-cert-issuer"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - gendarocketchat.129.212.169.222.sslip.io
+      secretName: gendarmerie-rocketchat-tls
+  rules:
+    - host: gendarocketchat.129.212.169.222.sslip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gendarmerie-gendarocketchat
+                port:
+                  number: 80

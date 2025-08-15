@@ -1,0 +1,93 @@
+replicaCount: 1
+
+image:
+  repository: mohamedsabbar/govcom-dashboard
+  tag: v0.6.45
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 3000
+
+env:
+  MONGODB_URI: "mongodb://sabbar:6J457yC9VZ91N9W83YWt@167.172.96.88:27017/rocketchat?directConnection=true&authSource=admin"
+  ROCKET_CHAT_URL: "https://govcomapi.mtnima.gov.mr"
+  ANRPTS_URL_PASSWORD: "g3n&reUnMotDeP@ss3!"
+  ANRPTS_URL_USERNAME: "AppCommGov"
+  ANRPTS_URL: "http://apipd.digital.gov.mr/person"
+  ANRPTS_KEY: "52798RUIWOFJKSDNLKJMXCNVO78478HJBMNZC8787YHJ"
+  NEXTAUTH_URL: "https://dashboardgovcom.129.212.169.222.sslip.io/"
+  NEXTAUTH_SECRET: "9WkhEfcsBA9TlQNGU/CmWuK64gnUs/kc65ilePUBHVM="
+  OTP_URL: "https://otp.ibtikar-tech.com"
+  OTP_MESSAGE_URL: "https://otp.ibtikar-tech.com/api/send-message"
+  OTP_API_KEY: "5s6b8a3c-9b5a-4S9e-8b9a-5f6b8a9c5o9e"
+  CG_Token: "WDkWaeSZUq1KA55HzwfbwG1fWDFhElGiNoa2kB6snu-"
+  CG_userId: "g48FFNEbiYmnHuEvq"
+
+  MINIO_PORT: "443"
+  MINIO_HOST: "fra1.digitaloceanspaces.com"
+  S3_BUCKET_NAME: "govcom-test"
+  MINIO_ACCESS_KEY: "DO801RCBXDZDLHNUV4ML"
+  MINIO_SECRET_KEY: "rzHJ8PpRo/OYz5Y2PpFtWjrEyYCJ7lLRgXyQUnbvHVY"
+  MINIO_USE_SSL: "true"
+  
+  APN_CERT: |-
+    -----BEGIN CERTIFICATE-----
+    MIIG9DCCBdygAwIBAgIQU5QRSYGftXYx/NSwJnDF9DANBgkqhkiG9w0BAQsFADB1
+    MUQwQgYDVQQDDDtBcHBsZSBXb3JsZHdpZGUgRGV2ZWxvcGVyIFJlbGF0aW9ucyBD
+    ZXJ0aWZpY2F0aW9uIEF1dGhvcml0eTELMAkGA1UECwwCRzQxEzARBgNVBAoMCkFw
+    cGxlIEluYy4xCzAJBgNVBAYTAlVTMB4XDTI0MTAzMDEzNDcwNloXDTI1MTEyOTEz
+    NDcwNVowgdkxJDAiBgoJkiaJk/IsZAEBDBRtci5nb3YubXRuaW1hLmdvdmNvbTEy
+    MDA...
+    -----END CERTIFICATE-----
+
+  APN_KEY: |-
+    -----BEGIN ENCRYPTED PRIVATE KEY-----
+    MIIFHDBOBgkqhkiG9w0BBQ0wQTApBgkqhkiG9w0BBQwwHAQI57Zr2XvVCqcCAggA
+    MAwGCCqGSIb3DQIJBQAwFAYIKoZIhvcNAwcECHMy7RMFI6z8BIIEyGhHD+IbFZzv
+    mo/1PzKaxoIh+Qj+4BbreSMpiA3tVfO5kxS0c9rncqBj96xCCwm3JwojaLLNuYp0
+    fDgrxDaXgg61a2LoT0CwsXKrp0vXXUQo/aYHBBJ1XRwK7cukwx7URdnOcCBliI+l
+    lrsVI7va/ZV5b85AZGbHMYbk7k5nE8YTwWpZatyidadx5Es4KYM/+rsDgEP7yfuJ
+    fx+J+i77VIQdo1HdVIE4vQLOOsuuwfyl+tGqq18YQJqSYvfGi1lNWxpNtFGGM3hT
+    GR4MkfQ7cROm3/SXbMxbtb0j2bI/yT2UyMBWnwwg4xMzuLDv6V5etVSWhyogcZn6
+    nrUXg1iSPj3IJBcFFyABAFVkDfa+GeO0CAfFvh7WhAUw6gGeRj8Z2ZDY7JixyLui
+    XpWFDP5/qIPjnzKtX9GaMCq36/SE/k/IemnV4amC9SaoVFVeBgEEjLK6jgvCiWBK
+    p3p6wy6AvNw5GyMQx9ADUB4ThVGQWe1eotMTBCRSu8t5eAEpfbGQESAt/0HRzA4k
+    RTGT3YSI7Ag+w0DzHavCPFoz7uDZbLpnrUumDFH+iuYDI6v0HYM+gDesDq/jov09
+    1X198hjaclbUAcqlW4sPJMLB33DWHrYmd2WVLutBhck+dkK8+C4XvqfbQeX+3+g0
+    9gyBy9Wjb+K9TRFcrNWZHj9oipBj4qrbK7dexwFYzGNWTgCqi0QMMty6vc4A6C8g
+    EJ7X+CKvT4c7+g4jmLF9yFwnzNVpGs2Zf+JiufpOTxBFRWj06Gv8ObZS6y2CUFNX
+    LyV6DBm1Yo7FmNS88z0MU6q5TElJAL92DXS0t7QXEeVz1eLjADBrY1SvlTVf3tPZ
+    hXuduVu0INinsx/nkpyNBi9sOQyqB470P3zi7z++vRDSlfwVPLVUx0SMk7tBD7RJ
+    rLJkspbQ93dlttJaw5Q7qeDk/UzVk8IlpFlorJtni5MxtYaNpl7coBR8IvKKSGhW
+    XjdLs80W01lv19Fs9WLXgJj1Vp9iRihj5hNGTR8OanV2qW7cz3Az0RAvcISAgxOR
+    VsQBjKtDUmmJgh2wdUlQhF5Xhv2LRRLDVayaOaX214/te+xMCjntw7eFKI2VAj5u
+    q5uIT47HxL63rd+irPjv4H6M/O0a2KtF3PS+vtAsAAibsEMv4+cqM+cVYn5jApL9
+    E/WLdCn64eq604YAfB8Kv6Yszkcd8yJ3QxFYe/44Khjg5E+OgzUnGOXDehVb9UdZ
+    G+QA9Tn6BbugOa9WVo9x7jgxT1fRSXFoiU97W21WPP5/oWnDOB59lGmT1X/KMqvN
+    /6XrZun0APMgLDcqIkaPtGLJOPuIDzFUsJN5iA7nER87gd5GHtjHp+uf42R/SutP
+    daijgixBpz1EC3oBjeycQjsEX6dONGxOsCofkR2veSUagWtshL84Jjzyby8Lm4e9
+    MMi3FMuncy4LJCj9twwrPwugZpYHcdHI3yk+cLMJJTHyFuZbdL5Ym76pPkrMBmES
+    epTyOpKTEdwIlv02BPVNLbAw48L8/Xzyypmd0ylAeM4uve5E4SSeEXZmVsUtpiO6
+    E3Z9j4+bXSrtSff6T1GWEafFhhPrmnPkJ7W1wbhdZL/2YHM/GCmLOpz9rDJLnGPw
+    usUgzpqBe2nVhKb7fy7TzQ==
+    -----END ENCRYPTED PRIVATE KEY-----
+
+  # FCM_CERT: "<REMPLACE_PAR_TON_CERTIFICAT_GOOGLE_CLOUD>"
+  # Note: Certificat Google Cloud supprimé pour des raisons de sécurité
+  # Ajoute ton certificat FCM ici en tant que secret Kubernetes
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+ingress:
+  enabled: false
+  # tu peux ajouter d'autres valeurs comme hosts, annotations, etc. si tu utilises l'ingress
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+imagePullSecrets:
+  - name: regcred
+

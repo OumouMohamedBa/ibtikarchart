@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: govcom-cronjob
+  namespace: ibtikarchart
+spec:
+  schedule: "0 10 */3 * *"  # Tous les 3 jours à 10h00
+  concurrencyPolicy: Replace  # Changé de Allow à Replace pour éviter les jobs multiples
+  failedJobsHistoryLimit: 3
+  successfulJobsHistoryLimit: 3
+  suspend: false
+  jobTemplate:
+    spec:
+      # NOUVEAU: Timeout pour éviter les jobs infinis
+      activeDeadlineSeconds: 3600  # 1 heure maximum
+      backoffLimit: 3  # Maximum 3 tentatives
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: govcom-cron
+            image: oumouba/govcom-cronjob:latest
+            imagePullPolicy: Always
+            envFrom:
+            - secretRef:
+                name: govcom-env-secret
+            # NOUVEAU: Limites de ressources
+            resources:
+              limits:
+                cpu: "500m"
+                memory: "512Mi"
+              requests:
+                cpu: "100m"
+                memory: "128Mi"
+            # NOUVEAU: Timeout pour le conteneur
+            env:
+            - name: JOB_TIMEOUT
+              value: "3000"  # 50 minutes en secondes
+          # NOUVEAU: Grace period plus court
+          terminationGracePeriodSeconds: 30

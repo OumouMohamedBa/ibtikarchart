@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  labels:
+    app.kubernetes.io/instance: use1-cert-manager
+  name: production-cert-issuer  # Customize as needed; referenced in values.yaml later
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: oumoumedba@gmail.com  # Replace with your email
+    privateKeySecretRef:
+      name: cert-manager-secret-production # Customize as needed
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
