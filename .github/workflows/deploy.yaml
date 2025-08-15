@@ -31,5 +31,6 @@ jobs:
 
       - name: Deploy Helm Chart
         run: |
-          helm dependency update ./ibtikarchart
-          helm upgrade --install ibtikarchart ./ibtikarchart -n ibtikarchart --create-namespace
+          helm dependency update ibtikarchart
+          
+
